@@ -27,6 +27,8 @@ export class CustomersController {
 
   @Get('/search/:id')
   searchCustomerId(@Param('id', ParseIntPipe) id: number) {
+    console.log('minh');
+
     const customers = this.customerService.findCustomerbyId(id);
     if (customers) {
       return customers;
