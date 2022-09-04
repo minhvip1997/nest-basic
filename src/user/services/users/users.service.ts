@@ -5,9 +5,9 @@ import { SerializeUser, User } from 'src/user/type';
 @Injectable()
 export class UsersService {
   private users: User[] = [
-    { username: 'minh', password: 'minh' },
-    { username: 'minh1', password: 'minh1' },
-    { username: 'minh2', password: 'minh2' },
+    { id: 1, username: 'minh', password: 'minh' },
+    { id: 2, username: 'minh1', password: 'minh1' },
+    { id: 3, username: 'minh2', password: 'minh2' },
   ];
 
   getUsers() {
@@ -16,5 +16,9 @@ export class UsersService {
 
   getUserByUserName(username: string) {
     return this.users.find((user) => user.username === username);
+  }
+
+  getUserById(id: number) {
+    return this.users.find((user) => user.id === id);
   }
 }
