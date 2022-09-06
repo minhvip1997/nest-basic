@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
 import { CreateUserDto } from 'src/user/dto/CreateUser.dto';
 import { SerializeUser, User } from 'src/user/type';
+import { encodePassword } from 'src/utils/bcrypt';
 import { Repository } from 'typeorm';
 import { Users } from '../../../typeorm/User';
 
@@ -31,14 +32,18 @@ export class UsersService {
   }
 
   createUser(createUser: CreateUserDto) {
-    console.log(createUser);
-
-    const newUser = this.userRepository.create(createUser);
-    console.log(newUser);
+    // console.log(createUser);
+    const password = encodePassword(createUser.password);
+    const newUser = this.userRepository.create({ ...createUser, password });
+    // console.log(newUser);
     return this.userRepository.save(newUser);
   }
 
   findByUserName(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { username: username } });
+  }
+
+  findUserById(id: number) {
+    return this.userRepository.findOne({ where: { id: id } });
   }
 }
